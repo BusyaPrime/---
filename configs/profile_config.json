@@ -1,0 +1,15 @@
+{
+    "Nx": 2048,
+    "Ny": 2048,
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "alpha": 0.1,
+    "T": 0.5,
+    "dt": 0.01,
+    "scheme": "CN",
+    "maxIters": 1000,
+    "tol": 1e-6,
+    "threads": 8,
+    "outDir": "artifacts_profile",
+    "testCase": "NON_TRIVIAL"
+}

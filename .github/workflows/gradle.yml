@@ -1,0 +1,34 @@
+name: Java CI (Сборка и тесты через Gradle)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    - name: Подтягиваем православный JDK 21 (шоб без сюрпризов)
+      uses: actions/setup-java@v3
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+    
+    - name: Выдаем права на исполнение gradlew (chmod +x, классика)
+      run: chmod +x gradlew
+      
+    - name: Собираем и гоняем MMS матан-тесты (интеграционка)
+      run: ./gradlew test
+      
+    - name: Мониторим покрытие тестами (Jacoco, меньше 85% - расстрел)
+      run: ./gradlew jacocoTestReport
+      
+    - name: Билдим жирнющий Shadow/Fat JAR
+      run: ./gradlew shadowJar
+      
+    - name: Прожариваем перф-бенчи (JMH)
+      run: ./gradlew jmh

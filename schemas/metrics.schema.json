@@ -1,0 +1,73 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Metrics Schema",
+    "description": "Validation schema for PDE-LAB runtime exported metrics",
+    "type": "object",
+    "properties": {
+        "threadsRequested": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of threads the user originally requested in config"
+        },
+        "threadsEffective": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Number of threads the HPC ForkJoinPool actually allocated"
+        },
+        "chunkStrategy": {
+            "type": "string",
+            "enum": [
+                "AUTO_DYNAMIC"
+            ],
+            "description": "Load balancing algorithm applied over the vector domain"
+        },
+        "wallTimeSeconds": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Total compute duration (seconds) from boundary init to final IO"
+        },
+        "totalPcgIters": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Cumulative total of Krylov Subspace iterations executed matching tol"
+        },
+        "maxAbsResidual": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Maximum absolute residual ||r|| = ||b - Ax|| encountered across all steps"
+        },
+        "maxRelResidual": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Maximum relative residual ||r|| / ||b|| encountered across all steps"
+        },
+        "errorL2": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Absolute L2 Spatial Error ||u_num - u_exact||_2"
+        },
+        "errorLinf": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Absolute L_infinity Spatial Error max|u_num - u_exact|"
+        },
+        "errorRelL2": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Relative L2 Spatial Error ||u_num - u_exact||_2 / ||u_exact||_2"
+        }
+    },
+    "required": [
+        "threadsRequested",
+        "threadsEffective",
+        "chunkStrategy",
+        "wallTimeSeconds",
+        "totalPcgIters",
+        "maxAbsResidual",
+        "maxRelResidual",
+        "errorL2",
+        "errorLinf",
+        "errorRelL2"
+    ],
+    "additionalProperties": false
+}

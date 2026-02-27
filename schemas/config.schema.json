@@ -1,0 +1,111 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Config Schema",
+    "description": "Validation schema for PDE-LAB run configurations",
+    "type": "object",
+    "properties": {
+        "Nx": {
+            "type": "integer",
+            "minimum": 3,
+            "description": "Grid nodes in X direction (must include boundary)"
+        },
+        "Ny": {
+            "type": "integer",
+            "minimum": 3,
+            "description": "Grid nodes in Y direction (must include boundary)"
+        },
+        "Lx": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Physical length in X direction"
+        },
+        "Ly": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Physical length in Y direction"
+        },
+        "alpha": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Thermal diffusivity"
+        },
+        "T": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Total simulation time limit"
+        },
+        "dt": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Delta time per step"
+        },
+        "scheme": {
+            "type": "string",
+            "enum": [
+                "CN",
+                "BE"
+            ],
+            "description": "Time integration scheme (Crank-Nicolson or Backward Euler)"
+        },
+        "maxIters": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Maximum PCG/MINRES solver iterations per time step"
+        },
+        "tol": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Relative solver tolerance (||r|| / ||b||)"
+        },
+        "threads": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of Java ForkJoinPool threads. 0 implies Runtime.getRuntime().availableProcessors()"
+        },
+        "outDir": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "Target output directory for run artifacts"
+        },
+        "testCase": {
+            "type": "string",
+            "enum": [
+                "HOMOGENEOUS",
+                "NON_TRIVIAL",
+                "NON_ZERO_DIRICHLET",
+                "VARIABLE_KAPPA"
+            ],
+            "description": "Pre-defined MMS mathematical test suite configuration"
+        },
+        "preconditioner": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "enum": [
+                "JACOBI",
+                "SSOR",
+                null
+            ],
+            "description": "Preconditioner applied to iterative system M^-1 A x = M^-1 b"
+        }
+    },
+    "required": [
+        "Nx",
+        "Ny",
+        "Lx",
+        "Ly",
+        "alpha",
+        "T",
+        "dt",
+        "scheme",
+        "maxIters",
+        "tol",
+        "threads",
+        "testCase",
+        "preconditioner"
+    ],
+    "additionalProperties": false
+}
